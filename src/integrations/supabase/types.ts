@@ -14,7 +14,152 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      contact_messages: {
+        Row: {
+          created_at: string | null
+          email: string
+          id: string
+          message: string
+          name: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          id?: string
+          message: string
+          name: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      license_keys: {
+        Row: {
+          assigned_at: string | null
+          assigned_to_email: string | null
+          created_at: string | null
+          id: string
+          key: string
+          product_id: string
+          status: string
+        }
+        Insert: {
+          assigned_at?: string | null
+          assigned_to_email?: string | null
+          created_at?: string | null
+          id?: string
+          key: string
+          product_id: string
+          status?: string
+        }
+        Update: {
+          assigned_at?: string | null
+          assigned_to_email?: string | null
+          created_at?: string | null
+          id?: string
+          key?: string
+          product_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "license_keys_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          amount_usd: number
+          amount_zar: number | null
+          created_at: string | null
+          customer_email: string
+          id: string
+          license_key_id: string | null
+          m_payment_id: string | null
+          payfast_payment_id: string | null
+          payfast_raw: Json | null
+          product_id: string
+          status: string
+          updated_at: string | null
+        }
+        Insert: {
+          amount_usd: number
+          amount_zar?: number | null
+          created_at?: string | null
+          customer_email: string
+          id?: string
+          license_key_id?: string | null
+          m_payment_id?: string | null
+          payfast_payment_id?: string | null
+          payfast_raw?: Json | null
+          product_id: string
+          status?: string
+          updated_at?: string | null
+        }
+        Update: {
+          amount_usd?: number
+          amount_zar?: number | null
+          created_at?: string | null
+          customer_email?: string
+          id?: string
+          license_key_id?: string | null
+          m_payment_id?: string | null
+          payfast_payment_id?: string | null
+          payfast_raw?: Json | null
+          product_id?: string
+          status?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_license_key_id_fkey"
+            columns: ["license_key_id"]
+            isOneToOne: false
+            referencedRelation: "license_keys"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "orders_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          name: string
+          price_usd: number
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id: string
+          name: string
+          price_usd: number
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          price_usd?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
