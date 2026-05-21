@@ -12,14 +12,15 @@ export const Route = createFileRoute("/products/$slug")({
     if (!product) throw notFound();
     return { product };
   },
-  head: ({ loaderData }) => ({
-    meta: loaderData
+  head: ({ loaderData }: { loaderData?: { product: ReturnType<typeof getProduct> } }) => ({
+    meta: loaderData?.product
       ? [
           { title: `${loaderData.product.name} — Bakone Trades` },
           { name: "description", content: loaderData.product.shortDescription },
         ]
       : [],
   }),
+
   notFoundComponent: () => (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -97,7 +98,7 @@ function ProductPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <h2 className="font-display text-3xl font-bold">What's included</h2>
           <ul className="mt-8 grid gap-4 sm:grid-cols-2">
-            {product.features.map((f) => (
+            {product.features.map((f: string) => (
               <li key={f} className="flex items-start gap-3 rounded-xl border border-border bg-background p-4">
                 <span className="mt-0.5 grid h-6 w-6 flex-none place-items-center rounded-full bg-primary text-primary-foreground">
                   <Check className="h-4 w-4" />
@@ -115,7 +116,7 @@ function ProductPage() {
           <div>
             <h3 className="font-display text-2xl font-bold">Supported brokers</h3>
             <div className="mt-5 flex flex-wrap gap-2">
-              {product.brokers.map((b) => (
+              {product.brokers.map((b: string) => (
                 <span key={b} className="rounded-full border border-border bg-card px-4 py-1.5 text-sm">{b}</span>
               ))}
             </div>
@@ -123,7 +124,7 @@ function ProductPage() {
           <div>
             <h3 className="font-display text-2xl font-bold">Supported markets</h3>
             <div className="mt-5 flex flex-wrap gap-2">
-              {product.markets.map((m) => (
+              {product.markets.map((m: string) => (
                 <span key={m} className="rounded-md border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-semibold text-accent">
                   {m}
                 </span>
@@ -132,6 +133,7 @@ function ProductPage() {
           </div>
         </div>
       </section>
+
 
       <Footer />
       <WhatsAppButton />
