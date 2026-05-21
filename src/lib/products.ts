@@ -1,3 +1,6 @@
+import killer from "../assets/killer.jpeg";
+import poverty from "../assets/poverty.jpeg";
+
 export type Product = {
   id: string;
   slug: string;
@@ -9,7 +12,7 @@ export type Product = {
   features: string[];
   brokers: string[];
   markets: string[];
-  imagePlaceholder: string;
+  imageSrc: string;
 };
 
 export const ALL_BROKERS = [
@@ -46,7 +49,7 @@ export const PRODUCTS: Product[] = [
     ],
     brokers: ALL_BROKERS,
     markets: ALL_MARKETS,
-    imagePlaceholder: "FX Killer PV4.0 Pro",
+    imageSrc: killer,
   },
   {
     id: "poverty-scalper-v2",
@@ -68,7 +71,7 @@ export const PRODUCTS: Product[] = [
     ],
     brokers: ALL_BROKERS,
     markets: ALL_MARKETS,
-    imagePlaceholder: "Poverty Scalper EA V2.0+",
+    imageSrc: poverty,
   },
 ];
 

@@ -13,7 +13,10 @@ export const Route = createFileRoute("/shop")({
   head: () => ({
     meta: [
       { title: "Shop — Bakone Trades Forex Bot License Keys" },
-      { name: "description", content: "Buy a license key for FX Killer PV4.0 Pro or Poverty Scalper EA V2.0+." },
+      {
+        name: "description",
+        content: "Buy a license key for FX Killer PV4.0 Pro or Poverty Scalper EA V2.0+.",
+      },
     ],
   }),
   component: ShopPage,

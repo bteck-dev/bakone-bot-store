@@ -53,17 +53,14 @@ function ProductPage() {
         <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2">
           {/* Image */}
           <div>
-            <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-secondary via-card to-background">
-              <div className="absolute inset-0 grid-bg opacity-30" />
-              <div className="absolute inset-0 grid place-items-center p-8 text-center">
-                <div>
-                  <div className="mb-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-                    [Image placeholder]
-                  </div>
-                  <div className="text-2xl font-bold text-gradient-gold">{product.imagePlaceholder}</div>
-                  <div className="mt-2 text-xs text-muted-foreground">Upload product screenshot here</div>
-                </div>
-              </div>
+            <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-border bg-card">
+              <img
+                src={product.imageSrc}
+                alt={`${product.name} screenshot`}
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
               <div className="absolute right-4 top-4 rounded-full bg-primary/20 px-3 py-1 text-xs font-semibold text-primary">
                 {product.version}
               </div>

@@ -5,17 +5,14 @@ import type { Product } from "@/lib/products";
 export function ProductCard({ product }: { product: Product }) {
   return (
     <div className="card-hover group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card">
-      {/* Image placeholder slot */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-secondary via-card to-background">
-        <div className="absolute inset-0 grid-bg opacity-30" />
-        <div className="absolute inset-0 grid place-items-center p-6 text-center">
-          <div>
-            <div className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              [Image placeholder]
-            </div>
-            <div className="text-lg font-bold text-gradient-gold">{product.imagePlaceholder}</div>
-          </div>
-        </div>
+      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-2xl border-b border-border bg-card">
+        <img
+          src={product.imageSrc}
+          alt={`${product.name} screenshot`}
+          className="h-full w-full object-cover"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/30 to-transparent" />
         <div className="absolute right-3 top-3 rounded-full bg-primary/20 px-3 py-1 text-xs font-semibold text-primary">
           {product.version}
         </div>

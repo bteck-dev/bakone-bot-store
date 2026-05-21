@@ -4,6 +4,7 @@ import { PAYFAST_URL, payfastFieldsForProduct } from "@/lib/payfast";
 import type { Product } from "@/lib/products";
 
 export function BuyNowForm({ product }: { product: Product }) {
+  const [fullNames, setFullNames] = useState("");
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
@@ -22,6 +23,20 @@ export function BuyNowForm({ product }: { product: Product }) {
 
   return (
     <form action={PAYFAST_URL} method="POST" onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label className="mb-1.5 block text-sm font-medium" htmlFor="buyer-email">
+          Full Names <span className="text-primary">*</span>
+        </label>
+        <input
+          id="buyer-fullnames"
+          type="text"
+          required
+          value={fullNames}
+          onChange={(e) => setFullNames(e.target.value)}
+          placeholder="John Doe"
+          className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
+        />
+      </div>
       <div>
         <label className="mb-1.5 block text-sm font-medium" htmlFor="buyer-email">
           Your email <span className="text-primary">*</span>

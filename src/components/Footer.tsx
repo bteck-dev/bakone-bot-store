@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, Phone, Music2 } from "lucide-react";
+import logo from "../assets/logo.jpeg";
 
 export function Footer() {
   return (
@@ -8,7 +9,11 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-3">
           <div>
             <div className="flex items-center gap-2 font-display text-lg font-bold">
-              <span className="grid h-8 w-8 place-items-center rounded-md bg-primary text-primary-foreground">B</span>
+              <img
+                src={logo}
+                alt="Bakone Trades logo"
+                className="grid h-8 w-8 place-items-center rounded-md bg-primary text-primary-foreground"
+              />
               Bakone <span className="text-gradient-gold">Trades</span>
             </div>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -20,9 +25,21 @@ export function Footer() {
               Navigate
             </h4>
             <ul className="mt-4 space-y-2 text-sm">
-              <li><Link to="/" className="hover:text-primary">Home</Link></li>
-              <li><Link to="/shop" className="hover:text-primary">Shop</Link></li>
-              <li><Link to="/contact" className="hover:text-primary">Contact</Link></li>
+              <li>
+                <Link to="/" className="hover:text-primary">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/shop" className="hover:text-primary">
+                  Shop
+                </Link>
+              </li>
+              <li>
+                <Link to="/" className="hover:text-primary">
+                  Contact
+                </Link>
+              </li>
             </ul>
           </div>
           <div>
@@ -38,11 +55,18 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-primary" />
-                <a href="tel:+27603733640" className="hover:text-primary">+27 60 373 3640</a>
+                <a href="tel:+27603733640" className="hover:text-primary">
+                  +27 60 373 3640
+                </a>
               </li>
               <li className="flex items-center gap-2">
                 <Music2 className="h-4 w-4 text-primary" />
-                <a href="https://tiktok.com/@bakonetrades" target="_blank" rel="noreferrer" className="hover:text-primary">
+                <a
+                  href="https://tiktok.com/@bakonetrades"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-primary"
+                >
                   @bakonetrades
                 </a>
               </li>
@@ -52,7 +76,8 @@ export function Footer() {
         <div className="mt-10 border-t border-border/60 pt-6">
           <p className="text-xs text-muted-foreground">
             <strong className="text-foreground/80">Risk disclaimer:</strong> Trading involves risk.
-            Past performance is not indicative of future results. Only trade with capital you can afford to lose.
+            Past performance is not indicative of future results. Only trade with capital you can
+            afford to lose.
           </p>
           <p className="mt-3 text-xs text-muted-foreground">
             © {new Date().getFullYear()} Bakone Trades. All rights reserved.

@@ -50,9 +50,9 @@ function HomePage() {
               <span className="text-gradient-gold">Grow your wealth.</span>
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-              Premium Expert Advisors built for serious traders. Buy a license,
-              plug it into your broker, and let the bot do the work — across forex,
-              gold, indices and synthetic markets.
+              Premium Expert Advisors built for serious traders. Buy a license, plug it into your
+              broker, and let the bot do the work — across forex, gold, indices and synthetic
+              markets.
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <Link
