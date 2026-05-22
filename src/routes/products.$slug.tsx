@@ -94,7 +94,7 @@ function ProductPage() {
             <h1 className="font-display text-4xl font-bold sm:text-5xl">{product.name}</h1>
             <div className="mt-4 flex items-baseline gap-3">
               <span className="text-4xl font-bold text-gradient-green">${product.priceUSD}</span>
-              <span className="text-sm text-muted-foreground">one-time purchase</span>
+              <span className="text-sm text-muted-foreground">180 day license</span>
             </div>
 
             <p className="mt-6 text-muted-foreground">{product.longDescription}</p>

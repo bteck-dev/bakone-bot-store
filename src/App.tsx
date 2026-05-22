@@ -10,6 +10,7 @@ const Product = lazy(() => import("./routes/products.$slug"));
 const Contact = lazy(() => import("./routes/contact"));
 const Success = lazy(() => import("./routes/success"));
 const Admin = lazy(() => import("./routes/admin"));
+const TermsOfService = lazy(() => import("./routes/termsofservice"));
 
 type BootState = "checking" | "ready" | "error";
 
@@ -74,6 +75,7 @@ export default function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/success" element={<Success />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/termsofservice" element={<TermsOfService />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Suspense>
