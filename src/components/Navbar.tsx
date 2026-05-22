@@ -1,6 +1,6 @@
-import { Link } from "@tanstack/react-router";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../assets/logo.jpeg";
 
 const NAV = [
@@ -11,63 +11,91 @@ const NAV = [
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const isHome = location.pathname === "/";
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 24);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const isTop = isHome && !scrolled;
+  const headerClasses = [
+    "sticky top-0 z-40 transition-all duration-300 ease-out",
+    "backdrop-blur-xl",
+    "border-b",
+    isTop
+      ? "bg-transparent border-transparent shadow-none"
+      : "bg-background/95 border-border/50 shadow-sm shadow-black/20",
+  ].join(" ");
+
   return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
-        <Link to="/" className="flex items-center gap-3 font-display text-lg font-bold">
+    <header className={headerClasses}>
+      <div className="mx-auto flex h-16 max-w-8xl items-center justify-between gap-4 px-4 sm:px-6">
+        <Link
+          to="/"
+          className="flex items-center gap-3 font-display text-lg font-bold transition hover:opacity-90"
+        >
           <img
             src={logo}
             alt="Bakone Trades logo"
-            className="h-10 w-10 rounded-md object-cover"
+            className="h-10 w-10 rounded-2xl border border-border/50 object-cover bg-card"
             loading="lazy"
           />
-          <span>
+          <span className="tracking-tight">
             Bakone <span className="text-gradient-gold">Trades</span>
           </span>
         </Link>
+
         <nav className="hidden items-center gap-8 md:flex">
           {NAV.map((item) => (
-            <Link
+            <NavLink
               key={item.to}
               to={item.to}
-              className="text-sm font-medium text-muted-foreground transition hover:text-foreground"
-              activeProps={{ className: "text-foreground" }}
+              className={({ isActive }) =>
+                `text-sm font-medium transition ${isActive ? "text-foreground" : "text-muted-foreground"}`
+              }
             >
               {item.label}
-            </Link>
+            </NavLink>
           ))}
           <Link
             to="/shop"
-            // supply search to satisfy @tanstack/react-router typing
-            search={undefined as unknown as never}
-            className="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
+            className="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-primary/40 hover:opacity-95"
           >
             Shop Now
           </Link>
         </nav>
-        <button className="md:hidden" onClick={() => setOpen((v) => !v)} aria-label="Toggle menu">
+
+        <button
+          className="md:hidden rounded-full border border-border/50 bg-card/80 p-2 text-foreground transition hover:bg-card"
+          onClick={() => setOpen((v) => !v)}
+          aria-label="Toggle menu"
+        >
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
+
       {open && (
-        <div className="border-t border-border/60 bg-background md:hidden">
-          <div className="flex flex-col gap-1 px-4 py-3">
+        <div className="border-t border-border/50 bg-background/95 py-3 md:hidden backdrop-blur-xl">
+          <div className="mx-auto flex max-w-7xl flex-col gap-1 px-4 sm:px-6">
             {NAV.map((item) => (
               <Link
                 key={item.to}
                 to={item.to}
                 onClick={() => setOpen(false)}
-                className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-secondary hover:text-foreground"
+                className="rounded-2xl px-4 py-3 text-sm font-medium text-muted-foreground transition hover:bg-secondary/20 hover:text-foreground"
               >
                 {item.label}
               </Link>
             ))}
             <Link
               to="/shop"
-              // supply search to satisfy @tanstack/react-router typing
-              search={undefined as unknown as never}
               onClick={() => setOpen(false)}
-              className="mt-2 rounded-md bg-primary px-3 py-2 text-center text-sm font-semibold text-primary-foreground"
+              className="mt-2 rounded-full bg-primary px-4 py-3 text-center text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
             >
               Shop Now
             </Link>

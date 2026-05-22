@@ -1,39 +1,50 @@
-// PayFast checkout helpers.
-// NOTE: You will wire up your backend to generate a signed payload + ITN endpoint.
-// For now, this submits a standard PayFast HTML form. Swap PAYFAST_URL to live
-// (https://www.payfast.co.za/eng/process) when going to production.
+import { apiRequest } from "./api";
 
-import type { Product } from "./products";
+type CheckoutRequest = {
+  productId: string;
+  customerName: string;
+  customerEmail: string;
+  customerPhone?: string;
+};
 
-export const PAYFAST_URL = "https://sandbox.payfast.co.za/eng/process";
-// Sandbox merchant credentials (PayFast public test credentials). Replace with
-// your real merchant_id/merchant_key from env on the server before launch.
-export const PAYFAST_MERCHANT_ID = "10000100";
-export const PAYFAST_MERCHANT_KEY = "46f0cd694581a";
+type CheckoutResponse = {
+  orderId: string;
+  payfast: {
+    actionUrl: string;
+    data: Record<string, string>;
+  };
+};
 
-// PayFast charges in ZAR. Frontend stores prices in USD as per the brief —
-// we convert with a simple rate stub. Your backend should do the live conversion
-// (or charge directly in ZAR) before signing the payload.
-export const USD_TO_ZAR = 19;
+const submitPayFastForm = (actionUrl: string, data: Record<string, string>) => {
+  const form = document.createElement("form");
+  form.method = "POST";
+  form.action = actionUrl;
+  form.enctype = "application/x-www-form-urlencoded";
 
-export function payfastFieldsForProduct(
-  product: Product,
-  buyerEmail: string,
-  origin: string,
-) {
-  const amountZAR = (product.priceUSD * USD_TO_ZAR).toFixed(2);
-  const m_payment_id = `${product.id}-${Date.now()}`;
-  return {
-    merchant_id: PAYFAST_MERCHANT_ID,
-    merchant_key: PAYFAST_MERCHANT_KEY,
-    return_url: `${origin}/success?ref=${m_payment_id}`,
-    cancel_url: `${origin}/shop?cancelled=1`,
-    notify_url: `${origin}/api/public/payfast-notify`,
-    m_payment_id,
-    amount: amountZAR,
-    item_name: `${product.name} — License Key`,
-    item_description: product.shortDescription.slice(0, 250),
-    email_address: buyerEmail,
-    custom_str1: product.id,
-  } as const;
+  Object.entries(data)
+    .filter(([, value]) => value !== "")
+    .forEach(([key, value]) => {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = key;
+      input.value = String(value);
+      form.appendChild(input);
+    });
+
+  document.body.appendChild(form);
+  form.submit();
+};
+
+export async function startCheckout(input: CheckoutRequest) {
+  const checkout = await apiRequest<CheckoutResponse>("/payments/checkout", {
+    method: "POST",
+    body: JSON.stringify({
+      customer_name: input.customerName,
+      customer_email: input.customerEmail,
+      customer_phone: input.customerPhone || undefined,
+      product_id: input.productId,
+    }),
+  });
+
+  submitPayFastForm(checkout.payfast.actionUrl, checkout.payfast.data);
 }

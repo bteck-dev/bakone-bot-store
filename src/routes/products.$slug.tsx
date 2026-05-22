@@ -1,46 +1,70 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Check } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { BuyNowForm } from "@/components/BuyNowForm";
-import { getProduct } from "@/lib/products";
+import { fetchProduct, getProduct, type Product } from "@/lib/products";
 
-export const Route = createFileRoute("/products/$slug")({
-  loader: ({ params }) => {
-    const product = getProduct(params.slug);
-    if (!product) throw notFound();
-    return { product };
-  },
-  head: ({ loaderData }: { loaderData?: { product: ReturnType<typeof getProduct> } }) => ({
-    meta: loaderData?.product
-      ? [
-          { title: `${loaderData.product.name} — Bakone Trades` },
-          { name: "description", content: loaderData.product.shortDescription },
-        ]
-      : [],
-  }),
-
-  notFoundComponent: () => (
-    <div className="min-h-screen bg-background">
-      <Navbar />
-      <div className="mx-auto max-w-xl px-4 py-32 text-center">
-        <h1 className="font-display text-4xl font-bold">Product not found</h1>
-        <Link to="/shop" className="mt-6 inline-flex items-center gap-2 text-primary hover:underline">
-          <ArrowLeft className="h-4 w-4" /> Back to shop
-        </Link>
-      </div>
-      <Footer />
-    </div>
-  ),
-  component: ProductPage,
-});
+export default ProductPage;
 
 function ProductPage() {
-  const { product } = Route.useLoaderData();
+  const { slug } = useParams();
+  const [product, setProduct] = useState<Product | undefined>(() => getProduct(slug || ""));
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!slug) {
+      setLoading(false);
+      return;
+    }
+
+    let active = true;
+
+    fetchProduct(slug)
+      .then((item) => {
+        if (active) setProduct(item);
+      })
+      .catch(() => {
+        if (active) setProduct(getProduct(slug));
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [slug]);
+
+  if (!product && !loading) {
+    return (
+      <div className="min-h-screen bg-background max-w-6xl mx-auto">
+        <Navbar />
+        <div className="mx-auto max-w-xl px-4 py-32 text-center">
+          <h1 className="font-display text-4xl font-bold">Product not found</h1>
+          <Link to="/shop" className="mt-6 inline-flex items-center gap-2 text-primary hover:underline">
+            <ArrowLeft className="h-4 w-4" /> Back to shop
+          </Link>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-background max-w-6xl mx-auto">
+        <Navbar />
+        <div className="mx-auto max-w-xl px-4 py-32 text-center text-muted-foreground">Loading product...</div>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background max-w-6xl mx-auto">
       <Navbar />
 
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
@@ -51,7 +75,6 @@ function ProductPage() {
 
       <section className="pb-20">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2">
-          {/* Image */}
           <div>
             <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-border bg-card">
               <img
@@ -67,12 +90,11 @@ function ProductPage() {
             </div>
           </div>
 
-          {/* Info */}
           <div>
             <h1 className="font-display text-4xl font-bold sm:text-5xl">{product.name}</h1>
             <div className="mt-4 flex items-baseline gap-3">
               <span className="text-4xl font-bold text-gradient-green">${product.priceUSD}</span>
-              <span className="text-sm text-muted-foreground">one-time · lifetime license</span>
+              <span className="text-sm text-muted-foreground">one-time purchase</span>
             </div>
 
             <p className="mt-6 text-muted-foreground">{product.longDescription}</p>
@@ -80,7 +102,7 @@ function ProductPage() {
             <div className="mt-8 rounded-2xl border border-border bg-card p-6">
               <h3 className="font-display text-lg font-bold">Get your license</h3>
               <p className="mt-1 text-sm text-muted-foreground">
-                Pay with PayFast. Your key will be emailed to you instantly.
+                Pay with PayFast. Your order status updates after payment confirmation.
               </p>
               <div className="mt-5">
                 <BuyNowForm product={product} />
@@ -90,7 +112,6 @@ function ProductPage() {
         </div>
       </section>
 
-      {/* Features */}
       <section className="border-t border-border/50 bg-card/30 py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <h2 className="font-display text-3xl font-bold">What's included</h2>
@@ -107,7 +128,6 @@ function ProductPage() {
         </div>
       </section>
 
-      {/* Brokers & markets */}
       <section className="border-t border-border/50 py-16">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 md:grid-cols-2">
           <div>
@@ -130,7 +150,6 @@ function ProductPage() {
           </div>
         </div>
       </section>
-
 
       <Footer />
       <WhatsAppButton />

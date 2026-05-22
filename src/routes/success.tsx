@@ -1,39 +1,38 @@
-import { createFileRoute, Link, useSearch } from "@tanstack/react-router";
-import { CheckCircle2, Download, Mail, MessageCircle } from "lucide-react";
+import React from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { AlertCircle, CheckCircle2, Download, Mail, MessageCircle } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
-export const Route = createFileRoute("/success")({
-  validateSearch: (s: Record<string, unknown>) => ({
-    ref: typeof s.ref === "string" ? s.ref : "",
-    key: typeof s.key === "string" ? s.key : "",
-  }),
-  head: () => ({
-    meta: [{ title: "Payment Successful — Bakone Trades" }],
-  }),
-  component: SuccessPage,
-});
+export default SuccessPage;
 
 function SuccessPage() {
-  const { ref, key } = useSearch({ from: "/success" });
+  const [search] = useSearchParams();
+  const ref = search.get("ref") ?? "";
+  const key = search.get("key") ?? "";
+  const status = search.get("status") ?? "paid";
+  const successful = status === "paid";
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background max-w-6xl mx-auto">
       <Navbar />
       <section className="mx-auto max-w-3xl px-4 py-20 sm:px-6">
         <div className="rounded-3xl border border-primary/30 bg-card p-8 text-center sm:p-12 glow-green">
-          <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-primary/15 text-primary">
-            <CheckCircle2 className="h-8 w-8" />
+          <div className={`mx-auto grid h-16 w-16 place-items-center rounded-full ${successful ? "bg-primary/15 text-primary" : "bg-destructive/10 text-destructive"}`}>
+            {successful ? <CheckCircle2 className="h-8 w-8" /> : <AlertCircle className="h-8 w-8" />}
           </div>
           <h1 className="mt-6 font-display text-4xl font-bold sm:text-5xl">
-            Payment <span className="text-gradient-green">Successful</span>
+            Payment <span className={successful ? "text-gradient-green" : "text-destructive"}>{successful ? "Successful" : "Pending"}</span>
           </h1>
           <p className="mt-3 text-muted-foreground">
-            Thank you for choosing Bakone Trades. Your license key has been sent to your email.
+            {successful
+              ? "Thank you for choosing Bakone Trades. Your payment has been confirmed."
+              : "We returned from PayFast, but final payment confirmation is still pending. Please contact support if this does not update."}
           </p>
           {ref && (
             <p className="mt-2 text-xs text-muted-foreground">
               Order reference: <code className="rounded bg-secondary px-2 py-0.5">{ref}</code>
+              {status && <span className="ml-2">Status: {status}</span>}
             </p>
           )}
 

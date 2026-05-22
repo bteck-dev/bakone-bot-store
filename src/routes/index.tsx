@@ -1,4 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, ShoppingBag, Download, Settings, TrendingUp, Check } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
@@ -6,11 +7,9 @@ import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { ChartBackground } from "@/components/ChartBackground";
 import { ProductCard } from "@/components/ProductCard";
-import { PRODUCTS, ALL_BROKERS, ALL_MARKETS } from "@/lib/products";
+import { PRODUCTS, ALL_BROKERS, ALL_MARKETS, fetchProducts, type Product } from "@/lib/products";
 
-export const Route = createFileRoute("/")({
-  component: HomePage,
-});
+export default HomePage;
 
 const STEPS = [
   { icon: ShoppingBag, title: "Buy License Key", desc: "Pick a bot and pay securely with PayFast." },
@@ -26,8 +25,26 @@ const TRUST = [
 ];
 
 function HomePage() {
+  const [products, setProducts] = useState<Product[]>(PRODUCTS);
+
+  useEffect(() => {
+    let active = true;
+
+    fetchProducts()
+      .then((items) => {
+        if (active) setProducts(items);
+      })
+      .catch(() => {
+        if (active) setProducts(PRODUCTS);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background max-w-6xl mx-auto">
       <Navbar />
 
       {/* HERO */}
@@ -130,7 +147,7 @@ function HomePage() {
             </Link>
           </div>
           <div className="mt-10 grid gap-6 sm:grid-cols-2">
-            {PRODUCTS.map((p) => <ProductCard key={p.id} product={p} />)}
+            {products.map((p) => <ProductCard key={p.id} product={p} />)}
           </div>
         </div>
       </section>

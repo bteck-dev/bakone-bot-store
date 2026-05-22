@@ -1,5 +1,4 @@
-@import "tailwindcss" source(none);
-@source "../src";
+@import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -125,4 +124,10 @@
 }
 .animate-pulse-glow {
   animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes loading-bar {
+  0% { transform: translateX(-110%); }
+  50% { transform: translateX(40%); }
+  100% { transform: translateX(210%); }
 }

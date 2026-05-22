@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import React from "react";
 import { useState } from "react";
 import { Mail, Phone, Music2, Send, CheckCircle2 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
@@ -6,15 +6,7 @@ import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { supabase } from "@/integrations/supabase/client";
 
-export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      { title: "Contact — Bakone Trades" },
-      { name: "description", content: "Get in touch with Bakone Trades for support, demos, or questions about our trading bots." },
-    ],
-  }),
-  component: ContactPage,
-});
+export default ContactPage;
 
 function ContactPage() {
   const [name, setName] = useState("");
@@ -49,7 +41,7 @@ function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background max-w-6xl mx-auto">
       <Navbar />
       <section className="border-b border-border/50">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20">

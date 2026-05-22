@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { Mail, Phone, Music2 } from "lucide-react";
 import logo from "../assets/logo.jpeg";
 
@@ -38,6 +38,11 @@ export function Footer() {
               <li>
                 <Link to="/" className="hover:text-primary">
                   Contact
+                </Link>
+              </li>
+              <li>
+                <Link to="/termsofservice" className="hover:text-primary">
+                  Terms of Service
                 </Link>
               </li>
             </ul>

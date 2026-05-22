@@ -1,30 +1,47 @@
 import { useState } from "react";
-import { Lock } from "lucide-react";
-import { PAYFAST_URL, payfastFieldsForProduct } from "@/lib/payfast";
+import { AlertCircle, Lock } from "lucide-react";
+import { startCheckout } from "@/lib/payfast";
 import type { Product } from "@/lib/products";
 
 export function BuyNowForm({ product }: { product: Product }) {
   const [fullNames, setFullNames] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      e.preventDefault();
-      alert("Please enter a valid email — we'll send your license key here.");
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError("");
+
+    if (!fullNames.trim()) {
+      setError("Please enter your full name.");
       return;
     }
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError("Please enter a valid email. We'll send your license key here.");
+      return;
+    }
+
     setSubmitting(true);
-    // form will POST to PayFast
+    try {
+      await startCheckout({
+        productId: product.id,
+        customerName: fullNames.trim(),
+        customerEmail: email.trim(),
+        customerPhone: phone.trim(),
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Checkout failed. Please try again.");
+      setSubmitting(false);
+    }
   };
 
-  const origin = typeof window !== "undefined" ? window.location.origin : "";
-  const fields = payfastFieldsForProduct(product, email || "buyer@example.com", origin);
-
   return (
-    <form action={PAYFAST_URL} method="POST" onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="mb-1.5 block text-sm font-medium" htmlFor="buyer-email">
+        <label className="mb-1.5 block text-sm font-medium" htmlFor="buyer-fullnames">
           Full Names <span className="text-primary">*</span>
         </label>
         <input
@@ -54,11 +71,26 @@ export function BuyNowForm({ product }: { product: Product }) {
           Your license key will be sent to this email instantly after payment.
         </p>
       </div>
+      <div>
+        <label className="mb-1.5 block text-sm font-medium" htmlFor="buyer-phone">
+          WhatsApp number
+        </label>
+        <input
+          id="buyer-phone"
+          type="tel"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder="+27821234567"
+          className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
+        />
+      </div>
 
-      {/* Hidden PayFast fields */}
-      {Object.entries(fields).map(([k, v]) => (
-        <input key={k} type="hidden" name={k} value={v} />
-      ))}
+      {error && (
+        <div className="flex items-start gap-2 rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
+          <AlertCircle className="mt-0.5 h-4 w-4 flex-none" />
+          <span>{error}</span>
+        </div>
+      )}
 
       <button
         type="submit"
@@ -67,12 +99,12 @@ export function BuyNowForm({ product }: { product: Product }) {
       >
         <span className="relative z-10 inline-flex items-center justify-center gap-2">
           <Lock className="h-4 w-4" />
-          {submitting ? "Redirecting to PayFast…" : `Buy Now — $${product.priceUSD}`}
+          {submitting ? "Redirecting to PayFast..." : `Buy Now - $${product.priceUSD}`}
         </span>
       </button>
 
       <p className="text-center text-xs text-muted-foreground">
-        Secure payment via PayFast · Instant license delivery · 24/7 support
+        Secure payment via PayFast. Manual license delivery after payment confirmation.
       </p>
     </form>
   );
