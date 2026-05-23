@@ -83,7 +83,7 @@ function ProductPage() {
                 className="h-full w-full object-cover"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-background/80 via-transparent to-transparent" />
               <div className="absolute right-4 top-4 rounded-full bg-primary/20 px-3 py-1 text-xs font-semibold text-primary">
                 {product.version}
               </div>
