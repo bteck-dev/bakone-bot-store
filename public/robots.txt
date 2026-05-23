@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.bakonetrades.com/sitemap.xml
+Sitemap: https://bakonetrades.com/sitemap.xml
