@@ -1,18 +1,5 @@
 {
   "trailingSlash": false,
-  "redirects": [
-    {
-      "source": "/(.*)",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.bakonetrades.com"
-        }
-      ],
-      "destination": "https://bakonetrades.com/$1",
-      "permanent": true
-    }
-  ],
   "rewrites": [
     {
       "source": "/(.*)",
