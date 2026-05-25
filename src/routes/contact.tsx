@@ -4,7 +4,7 @@ import { Mail, Phone, Music2, Send, CheckCircle2 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { supabase } from "@/integrations/supabase/client";
+import { apiRequest } from "@/lib/api";
 
 export default ContactPage;
 
@@ -28,16 +28,20 @@ function ContactPage() {
       return;
     }
     setSending(true);
-    const { error: insertError } = await supabase
-      .from("contact_messages")
-      .insert({ name: name.trim(), email: email.trim(), message: message.trim() });
-    setSending(false);
-    if (insertError) {
+    try {
+      await apiRequest<{ sent: boolean }>("/messages/contact", {
+        method: "POST",
+        body: JSON.stringify({ name: name.trim(), email: email.trim(), message: message.trim() }),
+      });
+      setSent(true);
+      setName("");
+      setEmail("");
+      setMessage("");
+    } catch {
       setError("Could not send your message. Please try again or email us directly.");
-      return;
+    } finally {
+      setSending(false);
     }
-    setSent(true);
-    setName(""); setEmail(""); setMessage("");
   };
 
   return (

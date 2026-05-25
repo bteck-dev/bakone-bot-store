@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { BarChart3, Boxes, History, LogOut, MessageCircle, RefreshCw, ShoppingCart } from "lucide-react";
-import logo from "../../assets/logo.jpeg";
 import { adminApi } from "./adminApi";
 import { ErrorPanel } from "./components";
 import { AuditPanel } from "./panels/AuditPanel";
@@ -77,7 +76,7 @@ export function DashboardShell({ onLogout }: { onLogout: () => void }) {
         <aside className="border-b border-border bg-card/90 backdrop-blur-xl lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-72 lg:flex-col lg:border-b-0 lg:border-r">
           <div className="flex items-center justify-between gap-3 px-4 py-4 lg:block lg:px-6 lg:py-6">
             <div className="flex items-center gap-3">
-              <img src={logo} alt="Bakone Trades" className="h-11 w-11 rounded-md border border-border object-cover" />
+              <img src="/logo.jpeg" alt="Bakone Trades" className="h-11 w-11 rounded-md border border-border object-cover" />
               <div>
                 <div className="text-xs font-semibold uppercase tracking-widest text-primary">Bakone</div>
                 <h1 className="font-display text-2xl font-bold">Dashboard</h1>

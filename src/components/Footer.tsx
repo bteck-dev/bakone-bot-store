@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, Music2 } from "lucide-react";
-import logo from "../assets/logo.jpeg";
-
 export function Footer() {
   return (
     <footer className="border-t border-border/60 bg-background">
@@ -10,9 +8,9 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-2 font-display text-lg font-bold">
               <img
-                src={logo}
+                src="/logo.jpeg"
                 alt="Bakone Trades logo"
-                className="grid h-8 w-8 place-items-center rounded-md bg-primary text-primary-foreground"
+                className="h-8 w-8 rounded-md border border-border object-cover bg-card"
               />
               Bakone <span className="text-gradient-gold">Trades</span>
             </div>

@@ -1,6 +1,5 @@
 import React, { Suspense, lazy, useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import logo from "./assets/logo.jpeg";
 import ErrorFallback from "./components/ErrorFallback";
 import { API_BASE_URL } from "./lib/api";
 
@@ -86,7 +85,7 @@ function StartupScreen({ label = "Checking system health" }: { label?: string })
   return (
     <main className="grid min-h-screen place-items-center bg-background px-4 grid-bg">
       <section className="w-full max-w-md rounded-md border border-border bg-card/90 p-6 text-center shadow-2xl shadow-black/30">
-        <img src={logo} alt="Bakone Trades" className="mx-auto h-14 w-14 rounded-md border border-border object-cover" />
+        <img src="/logo.jpeg" alt="Bakone Trades" className="mx-auto h-14 w-14 rounded-md border border-border object-cover" />
         <h1 className="mt-5 font-display text-3xl font-bold">Bakone Trades</h1>
         <p className="mt-2 text-sm text-muted-foreground">{label}</p>
         <div className="mx-auto mt-6 h-2 w-full overflow-hidden rounded-full bg-secondary">

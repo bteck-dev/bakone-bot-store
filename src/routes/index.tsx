@@ -13,9 +13,9 @@ export default HomePage;
 
 const STEPS = [
   { icon: ShoppingBag, title: "Buy License Key", desc: "Pick a bot and pay securely with PayFast." },
-  { icon: Download, title: "Download Bot", desc: "Get instant access to the EA file by email." },
-  { icon: Settings, title: "Install on Broker", desc: "Drop it on your MT4 / MT5 chart in minutes." },
-  { icon: TrendingUp, title: "Bot Trades For You", desc: "Sit back while the EA scans and executes." },
+  { icon: Download, title: "Download RoboTrader", desc: "Install the RoboTrader app on your Android phone." },
+  { icon: Settings, title: "Add Your Key", desc: "Paste your license key and connect your trading server." },
+  { icon: TrendingUp, title: "Start Trading", desc: "Allow all symbols, then follow your setup instructions." },
 ];
 
 const TRUST = [
@@ -108,7 +108,7 @@ function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mx-auto max-w-2xl text-center">
             <div className="text-xs font-semibold uppercase tracking-widest text-primary">How it works</div>
-            <h2 className="mt-3 font-display text-4xl font-bold sm:text-5xl">From key to profit in 4 steps</h2>
+            <h2 className="mt-3 font-display text-4xl font-bold sm:text-5xl">From payment to setup in 4 steps</h2>
           </div>
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {STEPS.map((s, i) => (

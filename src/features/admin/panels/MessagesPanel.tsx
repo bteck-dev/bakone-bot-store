@@ -5,6 +5,8 @@ import { adminApi } from "../adminApi";
 import { DataBlock, paginate, Pagination, StatusBadge } from "../components";
 import type { MessageLog, Order, Thread } from "../types";
 
+const robotraderAppUrl = import.meta.env.VITE_ROBOTRADER_APP_DOWNLOAD_URL || "";
+
 export function MessagesPanel({ threads, messages, orders, selectedOrder, onSelectedOrder, onChanged }: {
   threads: Thread[];
   messages: MessageLog[];
@@ -214,7 +216,27 @@ function MessageComposer({ order, onSent }: { order: Order; onSent: () => void }
   useEffect(() => {
     setTo(order.customer_email);
     setSubject(`Your ${order.product_name} license key`);
-    setMessage(`<h2>Your License Key</h2><p>Hi ${order.customer_name},</p><p>Your ${order.product_name} license key is:</p><p><strong>PASTE-LICENSE-KEY-HERE</strong></p><p>Order: ${order.order_id}</p>`);
+    setMessage(
+      `<div style="font-family:Arial,Helvetica,sans-serif;max-width:640px;margin:auto;color:#111827">` +
+      `<div style="background:#0f0f0f;padding:24px;text-align:center;border-radius:16px 16px 0 0">` +
+      `<h1 style="margin:0;color:#ffffff">Bakone <span style="color:#f7c948">Trades</span></h1>` +
+      `</div>` +
+      `<div style="border:1px solid #e5e7eb;border-top:0;border-radius:0 0 16px 16px;padding:28px">` +
+      `<h2>Your Bakone Trades License Key</h2>` +
+      `<p>Hi ${order.customer_name},</p>` +
+      `<p>Your <strong>${order.product_name}</strong> license key is:</p>` +
+      `<p style="font-size:20px;padding:14px;border:1px solid #bbf7d0;background:#f0fdf4;border-radius:10px"><strong>PASTE-LICENSE-KEY-HERE</strong></p>` +
+      `<h3>Start using your bot</h3>` +
+      `<ol style="line-height:1.8">` +
+      `<li><strong>Download the RoboTrader app on your Android phone.</strong><br/>${robotraderAppUrl ? `<a href="${robotraderAppUrl}">Download the RoboTrader app here</a>` : "Use the RoboTrader download link provided by Bakone Trades support."}</li>` +
+      `<li><strong>Open the app and add the license key.</strong><br/>Paste the key exactly as it appears in this email.</li>` +
+      `<li><strong>Connect the app to your trading server.</strong><br/>Use your broker login details.</li>` +
+      `<li><strong>Allow all symbols.</strong><br/>This lets the app see the markets available on your trading account.</li>` +
+      `</ol>` +
+      `<p style="color:#6b7280">Order: ${order.order_id}</p>` +
+      `</div>` +
+      `</div>`,
+    );
   }, [order]);
 
   const send = async (event: React.FormEvent) => {

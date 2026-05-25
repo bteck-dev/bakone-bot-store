@@ -1,7 +1,6 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import logo from "../assets/logo.jpeg";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -40,7 +39,7 @@ export function Navbar() {
           className="flex items-center gap-3 font-display text-lg font-bold transition hover:opacity-90"
         >
           <img
-            src={logo}
+            src="/logo.jpeg"
             alt="Bakone Trades logo"
             className="h-10 w-10 rounded-2xl border border-border/50 object-cover bg-card"
             loading="lazy"
