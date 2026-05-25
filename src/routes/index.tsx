@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, ShoppingBag, Download, Settings, TrendingUp, Check } from "lucide-react";
@@ -12,14 +12,14 @@ import { PRODUCTS, ALL_BROKERS, ALL_MARKETS, fetchProducts, type Product } from 
 export default HomePage;
 
 const STEPS = [
-  { icon: ShoppingBag, title: "Buy License Key", desc: "Pick a bot and pay securely with PayFast." },
+  { icon: ShoppingBag, title: "Buy License Key", desc: "Pick a bot and pay securely with PayPal." },
   { icon: Download, title: "Download RoboTrader", desc: "Install the RoboTrader app on your Android phone." },
   { icon: Settings, title: "Add Your Key", desc: "Paste your license key and connect your trading server." },
   { icon: TrendingUp, title: "Start Trading", desc: "Allow all symbols, then follow your setup instructions." },
 ];
 
 const TRUST = [
-  { label: "Secure Payment", desc: "PayFast SSL-encrypted checkout" },
+  { label: "Secure Payment", desc: "PayPal secure checkout" },
   { label: "Instant Delivery", desc: "License key emailed immediately" },
   { label: "24/7 Support", desc: "WhatsApp, email or TikTok DM" },
 ];
@@ -68,7 +68,7 @@ function HomePage() {
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
               Premium Expert Advisors built for serious traders. Buy a license, plug it into your
-              broker, and let the bot do the work — across forex, gold, indices and synthetic
+              broker, and let the bot do the work â€” across forex, gold, indices and synthetic
               markets.
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
@@ -209,3 +209,4 @@ function HomePage() {
     </div>
   );
 }
+

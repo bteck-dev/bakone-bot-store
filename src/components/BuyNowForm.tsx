@@ -1,6 +1,6 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { AlertCircle, Lock } from "lucide-react";
-import { startCheckout } from "@/lib/payfast";
+import { startCheckout } from "@/lib/paypal";
 import type { Product } from "@/lib/products";
 
 export function BuyNowForm({ product }: { product: Product }) {
@@ -99,13 +99,15 @@ export function BuyNowForm({ product }: { product: Product }) {
       >
         <span className="relative z-10 inline-flex items-center justify-center gap-2">
           <Lock className="h-4 w-4" />
-          {submitting ? "Redirecting to PayFast..." : `Buy Now - $${product.priceUSD}`}
+          {submitting ? "Redirecting to PayPal..." : `Buy Now - $${product.priceUSD}`}
         </span>
       </button>
 
       <p className="text-center text-xs text-muted-foreground">
-        Secure payment via PayFast. Manual license delivery after payment confirmation.
+        Secure payment via PayPal. Manual license delivery after payment confirmation.
       </p>
     </form>
   );
 }
+
+

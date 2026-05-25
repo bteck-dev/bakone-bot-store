@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { AlertCircle, CheckCircle2, Download, Mail, MessageCircle } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
@@ -37,7 +37,7 @@ function SuccessPage() {
           <p className="mt-3 text-muted-foreground">
             {successful
               ? "Thank you for choosing Bakone Trades. Your payment has been confirmed."
-              : "We returned from PayFast, but final payment confirmation is still pending. Please contact support if this does not update."}
+              : "We returned from PayPal, but final payment confirmation is still pending. Please contact support if this does not update."}
           </p>
 
           {ref && (
@@ -126,3 +126,4 @@ function SuccessPage() {
     </div>
   );
 }
+

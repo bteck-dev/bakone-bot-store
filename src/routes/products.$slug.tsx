@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Check } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
@@ -102,7 +102,7 @@ function ProductPage() {
             <div className="mt-8 rounded-2xl border border-border bg-card p-6">
               <h3 className="font-display text-lg font-bold">Get your license</h3>
               <p className="mt-1 text-sm text-muted-foreground">
-                Pay with PayFast. Your order status updates after payment confirmation.
+                Pay with PayPal. Your order status updates after payment confirmation.
               </p>
               <div className="mt-5">
                 <BuyNowForm product={product} />
@@ -156,3 +156,4 @@ function ProductPage() {
     </div>
   );
 }
+

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { AlertCircle } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
@@ -46,7 +46,7 @@ function ShopPage() {
             Pick your <span className="text-gradient-gold">Expert Advisor</span>
           </h1>
           <p className="mt-4 max-w-2xl text-muted-foreground">
-            Each license is a one-time purchase. Your unique key is prepared after PayFast confirms payment.
+            Each license is a one-time purchase. Your unique key is prepared after PayPal confirms payment.
           </p>
           {cancelled && (
             <div className="mt-6 flex max-w-xl items-start gap-3 rounded-lg border border-destructive/40 bg-destructive/10 p-4 text-sm">
@@ -74,3 +74,4 @@ function ShopPage() {
     </div>
   );
 }
+
