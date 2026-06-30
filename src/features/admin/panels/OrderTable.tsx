@@ -1,4 +1,4 @@
-import { CheckCircle2, Mail, MessageCircle } from "lucide-react";
+import { CheckCircle2, CreditCard, Mail, MessageCircle } from "lucide-react";
 import { adminApi } from "../adminApi";
 import { paginate, Pagination, StatusBadge } from "../components";
 import type { Order } from "../types";
@@ -56,6 +56,9 @@ export function OrderTable({ orders, compact, empty = "No orders found.", onChan
                         Send message
                       </button>
                     )}
+                    {!compact && order.payment_status === "pending" && (
+                      <ConfirmPaymentButton orderId={order.order_id} onChanged={onChanged} />
+                    )}
                     {!compact && order.payment_status === "paid" && order.key_status === "pending_delivery" && (
                       <DeliverButton orderId={order.order_id} onChanged={onChanged} />
                     )}
@@ -68,6 +71,29 @@ export function OrderTable({ orders, compact, empty = "No orders found.", onChan
       </div>
       <Pagination page={page} pageSize={pageSize} total={orders.length} onPageChange={setPage} />
     </>
+  );
+}
+
+function ConfirmPaymentButton({ orderId, onChanged }: { orderId: string; onChanged?: () => void }) {
+  const [loading, setLoading] = useState(false);
+
+  const confirmPaid = async () => {
+    if (!window.confirm("Confirm that this PayPal payment was received? This will email the customer.")) return;
+
+    setLoading(true);
+    try {
+      await adminApi.confirmPayment(orderId);
+      onChanged?.();
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <button onClick={confirmPaid} disabled={loading} className="inline-flex items-center gap-1 rounded-md bg-primary px-3 py-2 text-xs font-bold text-primary-foreground transition hover:opacity-90 disabled:opacity-60">
+      <CreditCard className="h-3.5 w-3.5" />
+      {loading ? "Confirming..." : "Confirm payment"}
+    </button>
   );
 }
 

@@ -81,6 +81,9 @@ export function DashboardShell({ onLogout }: { onLogout: () => void }) {
                 <div className="text-xs font-semibold uppercase tracking-widest text-primary">Bakone</div>
                 <h1 className="font-display text-2xl font-bold">Dashboard</h1>
               </div>
+              <button onClick={onLogout} className="inline-flex items-center justify-center gap-2 rounded-md border border-border bg-background px-3 py-2 text-sm font-semibold transition hover:border-destructive/50 hover:text-destructive lg:hidden" aria-label="Logout">
+              <LogOut className="h-4 w-4" /> Logout
+              </button>
             </div>
           </div>
           <nav className="flex gap-2 overflow-x-auto px-4 pb-4 lg:flex-col lg:px-6">
@@ -99,7 +102,7 @@ export function DashboardShell({ onLogout }: { onLogout: () => void }) {
               <p className="mt-1 text-xs text-muted-foreground">Logged in with a protected API token.</p>
               <button onClick={onLogout} className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-md border border-border bg-background px-3 py-2 text-sm font-semibold transition hover:border-destructive/50 hover:text-destructive">
                 <LogOut className="h-4 w-4" /> Logout
-              </button>
+                </button>
             </div>
           </div>
         </aside>

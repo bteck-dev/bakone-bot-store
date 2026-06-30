@@ -12,6 +12,7 @@ const blankForm: ProductFormInput = {
   features: [],
   price: 0,
   image_url: "",
+  payment_link: "",
   is_visible: true,
 };
 
@@ -66,6 +67,7 @@ export function ProductsPanel({ products, onChanged }: { products: Product[]; on
             <textarea value={featuresText} onChange={(event) => setFeaturesText(event.target.value)} rows={5} placeholder="One feature per line" className="mt-1.5 w-full rounded-md border border-input bg-background px-3 py-2 outline-none transition focus:border-primary" />
           </label>
           <Field label="Image URL" value={form.image_url || ""} onChange={(value) => setForm({ ...form, image_url: value })} />
+          <Field label="Payment link" value={form.payment_link || ""} onChange={(value) => setForm({ ...form, payment_link: value })} />
           <label className="flex items-center gap-2 text-sm">
             <input type="checkbox" checked={form.is_visible} onChange={(event) => setForm({ ...form, is_visible: event.target.checked })} />
             Visible on store
@@ -101,6 +103,7 @@ function ProductCard({ product, onChanged }: { product: Product; onChanged: () =
     features: product.features || [],
     price: product.price,
     image_url: product.image_url || "",
+    payment_link: product.payment_link || "",
     is_visible: product.is_visible,
   });
   const [editFeatures, setEditFeatures] = useState((product.features || []).join("\n"));
@@ -115,6 +118,7 @@ function ProductCard({ product, onChanged }: { product: Product; onChanged: () =
       features: product.features || [],
       price: product.price,
       image_url: product.image_url || "",
+      payment_link: product.payment_link || "",
       is_visible: product.is_visible,
     });
     setEditFeatures((product.features || []).join("\n"));
@@ -182,6 +186,7 @@ function ProductCard({ product, onChanged }: { product: Product; onChanged: () =
             <textarea value={editFeatures} onChange={(event) => setEditFeatures(event.target.value)} rows={4} className="mt-1.5 w-full rounded-md border border-input bg-background px-3 py-2 outline-none transition focus:border-primary" />
           </label>
           <Field label="Image URL" value={editForm.image_url || ""} onChange={(value) => setEditForm({ ...editForm, image_url: value })} />
+          <Field label="Payment link" value={editForm.payment_link || ""} onChange={(value) => setEditForm({ ...editForm, payment_link: value })} />
           <label className="flex items-center gap-2 text-sm">
             <input type="checkbox" checked={editForm.is_visible} onChange={(event) => setEditForm({ ...editForm, is_visible: event.target.checked })} />
             Visible on store

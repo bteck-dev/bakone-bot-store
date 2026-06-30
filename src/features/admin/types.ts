@@ -62,6 +62,7 @@ export type Product = {
   features?: string[];
   price: number;
   image_url?: string;
+  payment_link?: string;
   is_visible: boolean;
   created_at?: string;
   updated_at?: string;
@@ -75,6 +76,7 @@ export type ProductFormInput = {
   features?: string[];
   price: number;
   image_url?: string;
+  payment_link?: string;
   is_visible?: boolean;
 };
 

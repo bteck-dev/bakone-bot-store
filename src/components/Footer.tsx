@@ -58,14 +58,14 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-primary" />
-                <a href="tel:+27603733640" className="hover:text-primary">
-                  +27 60 373 3640
+                <a href="tel:+27737526797" className="hover:text-primary">
+                  +27 73 752 6797
                 </a>
               </li>
               <li className="flex items-center gap-2">
                 <Music2 className="h-4 w-4 text-primary" />
                 <a
-                  href="https://tiktok.com/@bakonetrades"
+                  href="https://www.tiktok.com/@btech_1?_r=1&_t=ZS-97HQfW79s7Z"
                   target="_blank"
                   rel="noreferrer"
                   className="hover:text-primary"

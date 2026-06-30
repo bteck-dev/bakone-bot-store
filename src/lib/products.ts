@@ -14,6 +14,7 @@ export type Product = {
   brokers: string[];
   markets: string[];
   imageSrc: string;
+  paymentLink?: string;
 };
 
 type BackendProduct = {
@@ -25,6 +26,7 @@ type BackendProduct = {
   features?: string[] | null;
   price: number | string;
   image_url?: string | null;
+  payment_link?: string | null;
   is_visible?: boolean;
 };
 
@@ -120,6 +122,7 @@ function mapProduct(product: BackendProduct): Product {
     brokers: ALL_BROKERS,
     markets: ALL_MARKETS,
     imageSrc: product.image_url || meta.imageSrc || killer,
+    paymentLink: product.payment_link || undefined,
   };
 }
 
