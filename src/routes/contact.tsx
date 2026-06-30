@@ -72,11 +72,11 @@ function ContactPage() {
                   <div className="font-medium">bakonetrades@gmail.com</div>
                 </div>
               </a>
-              <a href="https://wa.me/27603733640" target="_blank" rel="noreferrer" className="flex items-center gap-3 rounded-xl border border-border bg-card p-4 transition hover:border-primary/50">
+              <a href="https://wa.me/27737526797" target="_blank" rel="noreferrer" className="flex items-center gap-3 rounded-xl border border-border bg-card p-4 transition hover:border-primary/50">
                 <Phone className="h-5 w-5 text-primary" />
                 <div>
                   <div className="text-xs uppercase tracking-wider text-muted-foreground">WhatsApp / Call</div>
-                  <div className="font-medium">+27 60 373 3640</div>
+                  <div className="font-medium">+27 73 752 6797</div>
                 </div>
               </a>
               <a href="https://tiktok.com/@bakonetrades" target="_blank" rel="noreferrer" className="flex items-center gap-3 rounded-xl border border-border bg-card p-4 transition hover:border-primary/50">

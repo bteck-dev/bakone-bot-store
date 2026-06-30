@@ -1,4 +1,4 @@
-﻿import { apiRequest } from "./api";
+import { apiRequest } from "./api";
 
 type CheckoutRequest = {
   productId: string;
@@ -9,14 +9,8 @@ type CheckoutRequest = {
 
 type CheckoutResponse = {
   orderId: string;
+  paymentLink?: string;
   approvalUrl?: string;
-  paypal?: {
-    approvalUrl?: string;
-  };
-};
-
-const getCheckoutUrl = (checkout: CheckoutResponse): string => {
-  return checkout.approvalUrl || checkout.paypal?.approvalUrl || "";
 };
 
 export async function startCheckout(input: CheckoutRequest) {
@@ -30,13 +24,11 @@ export async function startCheckout(input: CheckoutRequest) {
     }),
   });
 
-  const checkoutUrl = getCheckoutUrl(checkout);
+  const checkoutUrl = checkout.paymentLink || checkout.approvalUrl;
 
   if (!checkoutUrl) {
-    throw new Error("Payment provider did not return a checkout URL.");
+    throw new Error("No payment link is configured for this product.");
   }
 
   window.location.assign(checkoutUrl);
 }
-
-

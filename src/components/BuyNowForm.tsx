@@ -1,7 +1,9 @@
-﻿import { useState } from "react";
-import { AlertCircle, Lock } from "lucide-react";
+import { useState } from "react";
+import { AlertCircle, ArrowRight, ShieldCheck } from "lucide-react";
 import { startCheckout } from "@/lib/paypal";
 import type { Product } from "@/lib/products";
+
+const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 export function BuyNowForm({ product }: { product: Product }) {
   const [fullNames, setFullNames] = useState("");
@@ -10,22 +12,27 @@ export function BuyNowForm({ product }: { product: Product }) {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const validateCustomer = () => {
     setError("");
 
     if (!fullNames.trim()) {
       setError("Please enter your full name.");
-      return;
+      return false;
     }
 
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError("Please enter a valid email. We'll send your license key here.");
-      return;
+    if (!email || !validateEmail(email)) {
+      setError("Please enter a valid email. We'll use it to match your payment and send your license key.");
+      return false;
     }
 
-    setSubmitting(true);
+    return true;
+  };
+
+  const goToHostedCheckout = async () => {
+    if (!validateCustomer()) return;
+
     try {
+      setSubmitting(true);
       await startCheckout({
         productId: product.id,
         customerName: fullNames.trim(),
@@ -33,13 +40,13 @@ export function BuyNowForm({ product }: { product: Product }) {
         customerPhone: phone.trim(),
       });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Checkout failed. Please try again.");
+      setError(err instanceof Error ? err.message : "No payment link is configured for this product yet.");
       setSubmitting(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="space-y-4">
       <div>
         <label className="mb-1.5 block text-sm font-medium" htmlFor="buyer-fullnames">
           Full Names <span className="text-primary">*</span>
@@ -54,6 +61,7 @@ export function BuyNowForm({ product }: { product: Product }) {
           className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
         />
       </div>
+
       <div>
         <label className="mb-1.5 block text-sm font-medium" htmlFor="buyer-email">
           Your email <span className="text-primary">*</span>
@@ -68,21 +76,35 @@ export function BuyNowForm({ product }: { product: Product }) {
           className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
         />
         <p className="mt-1.5 text-xs text-muted-foreground">
-          Your license key will be sent to this email instantly after payment.
+          Use the same email on PayPal so we can match your payment quickly.
         </p>
       </div>
+
       <div>
-        <label className="mb-1.5 block text-sm font-medium" htmlFor="buyer-phone">
-          WhatsApp number
-        </label>
+        <label className="mb-1.5 block text-sm font-medium" htmlFor="buyer-phone">WhatsApp number</label>
         <input
           id="buyer-phone"
           type="tel"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          placeholder="+27821234567"
+          placeholder="+27737526797"
           className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
         />
+      </div>
+
+      <button
+        type="button"
+        onClick={goToHostedCheckout}
+        disabled={submitting}
+        className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-4 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition hover:opacity-90 disabled:cursor-wait disabled:opacity-60"
+      >
+        {submitting ? "Opening secure checkout..." : `Continue - $${product.priceUSD}`}
+        <ArrowRight className="h-5 w-5" />
+      </button>
+
+      <div className="flex items-start gap-2 rounded-lg border border-primary/25 bg-primary/5 p-3 text-xs text-muted-foreground">
+        <ShieldCheck className="mt-0.5 h-4 w-4 flex-none text-primary" />
+        <span>Secure checkout is handled by PayPal. You can choose PayPal or debit/credit card on the next page.</span>
       </div>
 
       {error && (
@@ -92,22 +114,9 @@ export function BuyNowForm({ product }: { product: Product }) {
         </div>
       )}
 
-      <button
-        type="submit"
-        disabled={submitting}
-        className="group relative w-full overflow-hidden rounded-full bg-primary px-6 py-4 text-base font-bold text-primary-foreground shadow-lg shadow-primary/30 transition hover:shadow-primary/50 disabled:opacity-60"
-      >
-        <span className="relative z-10 inline-flex items-center justify-center gap-2">
-          <Lock className="h-4 w-4" />
-          {submitting ? "Redirecting to PayPal..." : `Buy Now - $${product.priceUSD}`}
-        </span>
-      </button>
-
       <p className="text-center text-xs text-muted-foreground">
-        Secure payment via PayPal. Manual license delivery after payment confirmation.
+        {submitting ? "Redirecting to secure PayPal checkout..." : "You will choose your payment method on PayPal."}
       </p>
-    </form>
+    </div>
   );
 }
-
-

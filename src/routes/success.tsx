@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { AlertCircle, CheckCircle2, Download, Mail, MessageCircle } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
@@ -106,7 +106,7 @@ function SuccessPage() {
               <Mail className="h-4 w-4" /> Email us
             </a>
             <a
-              href="https://wa.me/27603733640"
+              href="https://wa.me/27737526797"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-secondary px-4 py-2.5 text-sm font-semibold hover:border-primary/50"

@@ -2,6 +2,7 @@ export const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL;
 
 const TOKEN_KEY = "bakone_admin_token";
+const AUTH_EXPIRED_EVENT = "bakone:auth-expired";
 
 export type ApiResponse<T> = {
   success: boolean;
@@ -27,6 +28,22 @@ export function clearAuthToken() {
   localStorage.removeItem(TOKEN_KEY);
 }
 
+export function onAuthExpired(callback: () => void) {
+  window.addEventListener(AUTH_EXPIRED_EVENT, callback);
+  return () => window.removeEventListener(AUTH_EXPIRED_EVENT, callback);
+}
+
+function handleExpiredSession() {
+  if (!getAuthToken()) return;
+
+  clearAuthToken();
+  window.dispatchEvent(new Event(AUTH_EXPIRED_EVENT));
+
+  if (window.location.pathname.startsWith("/admin")) {
+    window.history.replaceState(null, "", "/admin");
+  }
+}
+
 export async function apiRequest<T>(
   path: string,
   options: RequestInit = {},
@@ -46,6 +63,10 @@ export async function apiRequest<T>(
   }
 
   const body = (await response.json().catch(() => null)) as ApiResponse<T> | null;
+
+  if (response.status === 401 || response.status === 403) {
+    handleExpiredSession();
+  }
 
   if (!body) {
     throw new Error("The server returned an invalid response.");
