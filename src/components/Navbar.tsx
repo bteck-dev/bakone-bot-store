@@ -39,7 +39,7 @@ export function Navbar() {
           className="flex items-center gap-3 font-display text-lg font-bold transition hover:opacity-90"
         >
           <img
-            src="/logo.jpeg"
+            src="/logo.png"
             alt="Bakone Trades logo"
             className="h-10 w-10 rounded-2xl border border-border/50 object-cover bg-card"
             loading="lazy"

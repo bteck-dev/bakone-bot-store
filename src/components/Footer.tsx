@@ -8,7 +8,7 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-2 font-display text-lg font-bold">
               <img
-                src="/logo.jpeg"
+                src="/logo.png"
                 alt="Bakone Trades logo"
                 className="h-8 w-8 rounded-md border border-border object-cover bg-card"
               />
