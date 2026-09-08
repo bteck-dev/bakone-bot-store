@@ -78,7 +78,7 @@ function ConfirmPaymentButton({ orderId, onChanged }: { orderId: string; onChang
   const [loading, setLoading] = useState(false);
 
   const confirmPaid = async () => {
-    if (!window.confirm("Confirm that this PayPal payment was received? This will email the customer.")) return;
+    if (!window.confirm("Confirm that this iKhokha payment was received? This will email the customer.")) return;
 
     setLoading(true);
     try {

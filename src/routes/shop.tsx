@@ -12,6 +12,7 @@ export default ShopPage;
 function ShopPage() {
   const [search] = useSearchParams();
   const cancelled = search.get("cancelled") === "1" || search.get("cancelled") === "true";
+  const failed = search.get("failed") === "1" || search.get("status") === "failed";
   const status = search.get("status");
   const ref = search.get("ref");
   const [products, setProducts] = useState<Product[]>(PRODUCTS);
@@ -46,15 +47,15 @@ function ShopPage() {
             Pick your <span className="text-gradient-gold">Expert Advisor</span>
           </h1>
           <p className="mt-4 max-w-2xl text-muted-foreground">
-            Each license is a one-time purchase. Your unique key is prepared after PayPal confirms payment.
+            Each license is a one-time purchase. Your unique key is prepared after iKhokha confirms payment.
           </p>
-          {cancelled && (
+          {(cancelled || failed) && (
             <div className="mt-6 flex max-w-xl items-start gap-3 rounded-lg border border-destructive/40 bg-destructive/10 p-4 text-sm">
               <AlertCircle className="mt-0.5 h-4 w-4 text-destructive" />
               <div>
-                <div className="font-semibold">Payment cancelled</div>
+                <div className="font-semibold">{failed ? "Payment unsuccessful" : "Payment cancelled"}</div>
                 <div className="text-muted-foreground">
-                  No charge was made. {ref ? `Order ${ref} is ${status || "cancelled"}.` : "Feel free to try again whenever you're ready."}
+                  {failed ? "iKhokha could not complete the payment." : "No charge was made."} {ref ? `Order ${ref} is ${status || (failed ? "failed" : "cancelled")}.` : "Feel free to try again whenever you're ready."}
                 </div>
               </div>
             </div>

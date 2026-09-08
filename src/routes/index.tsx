@@ -12,14 +12,14 @@ import { PRODUCTS, ALL_BROKERS, ALL_MARKETS, fetchProducts, type Product } from 
 export default HomePage;
 
 const STEPS = [
-  { icon: ShoppingBag, title: "Buy License Key", desc: "Pick a bot and pay securely with PayPal." },
+  { icon: ShoppingBag, title: "Buy License Key", desc: "Pick a bot and pay securely with iKhokha." },
   { icon: Download, title: "Download RoboTrader", desc: "Install the RoboTrader app on your Android phone." },
   { icon: Settings, title: "Add Your Key", desc: "Paste your license key and connect your trading server." },
   { icon: TrendingUp, title: "Start Trading", desc: "Allow all symbols, then follow your setup instructions." },
 ];
 
 const TRUST = [
-  { label: "Secure Payment", desc: "PayPal secure checkout" },
+  { label: "Secure Payment", desc: "iKhokha secure checkout" },
   { label: "Instant Delivery", desc: "License key emailed immediately" },
   { label: "24/7 Support", desc: "WhatsApp, email or TikTok DM" },
 ];

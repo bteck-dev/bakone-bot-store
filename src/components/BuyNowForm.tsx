@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AlertCircle, ArrowRight, ShieldCheck } from "lucide-react";
-import { startCheckout } from "@/lib/paypal";
+import { startCheckout } from "@/lib/ikhokha";
 import type { Product } from "@/lib/products";
 
 const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -40,7 +40,7 @@ export function BuyNowForm({ product }: { product: Product }) {
         customerPhone: phone.trim(),
       });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "No payment link is configured for this product yet.");
+      setError(err instanceof Error ? err.message : "We could not open iKhokha checkout. Please try again.");
       setSubmitting(false);
     }
   };
@@ -76,7 +76,7 @@ export function BuyNowForm({ product }: { product: Product }) {
           className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30"
         />
         <p className="mt-1.5 text-xs text-muted-foreground">
-          Use the same email on PayPal so we can match your payment quickly.
+          We use this email for your receipt and license delivery.
         </p>
       </div>
 
@@ -104,7 +104,7 @@ export function BuyNowForm({ product }: { product: Product }) {
 
       <div className="flex items-start gap-2 rounded-lg border border-primary/25 bg-primary/5 p-3 text-xs text-muted-foreground">
         <ShieldCheck className="mt-0.5 h-4 w-4 flex-none text-primary" />
-        <span>Secure checkout is handled by PayPal. You can choose PayPal or debit/credit card on the next page.</span>
+        <span>Secure checkout is handled by iKhokha. Available methods may include card, Instant EFT, Apple Pay, and Google Pay.</span>
       </div>
 
       {error && (
@@ -115,7 +115,7 @@ export function BuyNowForm({ product }: { product: Product }) {
       )}
 
       <p className="text-center text-xs text-muted-foreground">
-        {submitting ? "Redirecting to secure PayPal checkout..." : "You will choose your payment method on PayPal."}
+        {submitting ? "Redirecting to secure iKhokha checkout..." : "You will choose your payment method on iKhokha."}
       </p>
     </div>
   );
