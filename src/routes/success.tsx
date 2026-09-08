@@ -37,7 +37,7 @@ function SuccessPage() {
           <p className="mt-3 text-muted-foreground">
             {successful
               ? "Thank you for choosing Bakone Trades. Your payment has been confirmed."
-              : "We returned from PayPal, but final payment confirmation is still pending. Please contact support if this does not update."}
+              : "We returned from iKhokha, but final payment confirmation is still pending. Please contact support if this does not update."}
           </p>
 
           {ref && (
@@ -126,4 +126,3 @@ function SuccessPage() {
     </div>
   );
 }
-

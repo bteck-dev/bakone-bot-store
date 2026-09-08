@@ -9,8 +9,8 @@ type CheckoutRequest = {
 
 type CheckoutResponse = {
   orderId: string;
-  paymentLink?: string;
-  approvalUrl?: string;
+  paymentId: string;
+  paymentLink: string;
 };
 
 export async function startCheckout(input: CheckoutRequest) {
@@ -24,11 +24,6 @@ export async function startCheckout(input: CheckoutRequest) {
     }),
   });
 
-  const checkoutUrl = checkout.paymentLink || checkout.approvalUrl;
-
-  if (!checkoutUrl) {
-    throw new Error("No payment link is configured for this product.");
-  }
-
-  window.location.assign(checkoutUrl);
+  if (!checkout.paymentLink) throw new Error("iKhokha did not return a checkout link.");
+  window.location.assign(checkout.paymentLink);
 }

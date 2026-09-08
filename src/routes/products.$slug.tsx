@@ -102,7 +102,7 @@ function ProductPage() {
             <div className="mt-8 rounded-2xl border border-border bg-card p-6">
               <h3 className="font-display text-lg font-bold">Get your license</h3>
               <p className="mt-1 text-sm text-muted-foreground">
-                Continue to secure checkout. You can choose PayPal or debit/credit card on the next page.
+                Continue to secure iKhokha checkout and choose from the available payment methods.
               </p>
               <div className="mt-5">
                 <BuyNowForm product={product} />
@@ -156,4 +156,3 @@ function ProductPage() {
     </div>
   );
 }
-
