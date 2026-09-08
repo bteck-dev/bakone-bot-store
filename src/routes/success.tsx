@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 
 export default SuccessPage;
 
-const robotraderAppUrl = import.meta.env.VITE_ROBOTRADER_APP_DOWNLOAD_URL || "";
+const botsyncAppUrl = import.meta.env.VITE_BOTSYNC_APP_DOWNLOAD_URL || "";
 
 function SuccessPage() {
   const [search] = useSearchParams();
@@ -16,7 +16,7 @@ function SuccessPage() {
   const successful = status === "paid";
 
   const setupSteps = [
-    "Download the RoboTrader app on your Android phone.",
+    "Download the BotSync app on your Android phone.",
     "Open the app and add the license key from your email.",
     "Connect the app to your trading server using your broker login details.",
     "Allow all symbols so the app can see the markets on your trading account.",
@@ -66,18 +66,18 @@ function SuccessPage() {
           <div className="mt-8 text-left">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <h2 className="font-display text-xl font-bold">Start using your bot</h2>
-              {robotraderAppUrl ? (
+              {botsyncAppUrl ? (
                 <a
-                  href={robotraderAppUrl}
+                  href={botsyncAppUrl}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground"
                 >
-                  <Download className="h-4 w-4" /> Download RoboTrader
+                  <Download className="h-4 w-4" /> Download BotSync
                 </a>
               ) : (
                 <span className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-secondary px-4 py-2.5 text-sm font-semibold text-muted-foreground">
-                  <Download className="h-4 w-4" /> Download RoboTrader
+                  <Download className="h-4 w-4" /> Download BotSync
                 </span>
               )}
             </div>
@@ -93,7 +93,7 @@ function SuccessPage() {
               ))}
             </ol>
             <p className="mt-4 rounded-lg border border-border bg-secondary/30 p-4 text-sm leading-6 text-muted-foreground">
-              RoboTrader is the app that runs your license on your phone. You do not need to understand advanced trading tools to start.
+              BotSync is the app that runs your license on your phone. You do not need to understand advanced trading tools to start.
               First install the app, then paste your license key when our team sends it to you.
             </p>
           </div>

@@ -13,7 +13,7 @@ export default HomePage;
 
 const STEPS = [
   { icon: ShoppingBag, title: "Buy License Key", desc: "Pick a bot and pay securely with iKhokha." },
-  { icon: Download, title: "Download RoboTrader", desc: "Install the RoboTrader app on your Android phone." },
+  { icon: Download, title: "Download BotSync", desc: "Install the BotSync app on your Android phone." },
   { icon: Settings, title: "Add Your Key", desc: "Paste your license key and connect your trading server." },
   { icon: TrendingUp, title: "Start Trading", desc: "Allow all symbols, then follow your setup instructions." },
 ];

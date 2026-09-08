@@ -5,7 +5,7 @@ import { adminApi } from "../adminApi";
 import { DataBlock, paginate, Pagination, StatusBadge } from "../components";
 import type { MessageLog, Order, Thread } from "../types";
 
-const robotraderAppUrl = import.meta.env.VITE_ROBOTRADER_APP_DOWNLOAD_URL || "";
+const botsyncAppUrl = import.meta.env.VITE_BOTSYNC_APP_DOWNLOAD_URL || "";
 
 export function MessagesPanel({ threads, messages, orders, selectedOrder, onSelectedOrder, onChanged }: {
   threads: Thread[];
@@ -228,7 +228,7 @@ function MessageComposer({ order, onSent }: { order: Order; onSent: () => void }
       `<p style="font-size:20px;padding:14px;border:1px solid #bbf7d0;background:#f0fdf4;border-radius:10px"><strong>PASTE-LICENSE-KEY-HERE</strong></p>` +
       `<h3>Start using your bot</h3>` +
       `<ol style="line-height:1.8">` +
-      `<li><strong>Download the RoboTrader app on your Android phone.</strong><br/>${robotraderAppUrl ? `<a href="${robotraderAppUrl}">Download the RoboTrader app here</a>` : "Use the RoboTrader download link provided by Bakone Trades support."}</li>` +
+      `<li><strong>Download the BotSync app on your Android phone.</strong><br/>${botsyncAppUrl ? `<a href="${botsyncAppUrl}">Download the BotSync app here</a>` : "Use the BotSync download link provided by Bakone Trades support."}</li>` +
       `<li><strong>Open the app and add the license key.</strong><br/>Paste the key exactly as it appears in this email.</li>` +
       `<li><strong>Connect the app to your trading server.</strong><br/>Use your broker login details.</li>` +
       `<li><strong>Allow all symbols.</strong><br/>This lets the app see the markets available on your trading account.</li>` +
